@@ -1,0 +1,98 @@
+-- Criação da ScreenGui
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "MovesetGui"
+screenGui.Parent = game.CoreGui
+
+-- Função para criar a GUI principal
+local function createMainGui()
+    -- Criação do Frame principal
+    local mainFrame = Instance.new("Frame")
+    mainFrame.Name = "MainFrame"
+    mainFrame.Size = UDim2.new(0, 400, 0, 600)
+    mainFrame.Position = UDim2.new(0.5, -200, 0.5, -300)
+    mainFrame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+    mainFrame.Active = true
+    mainFrame.Draggable = true
+    mainFrame.Parent = screenGui
+
+    -- Criação do ScrollingFrame
+    local scrollingFrame = Instance.new("ScrollingFrame")
+    scrollingFrame.Name = "ScrollingFrame"
+    scrollingFrame.Size = UDim2.new(1, 0, 1, -50)
+    scrollingFrame.Position = UDim2.new(0, 0, 0, 50)
+    scrollingFrame.CanvasSize = UDim2.new(0, 0, 2, 0)
+    scrollingFrame.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
+    scrollingFrame.Parent = mainFrame
+
+    -- Função para criar botões
+    local function createButton(name, position, code)
+        local button = Instance.new("TextButton")
+        button.Name = name
+        button.Size = UDim2.new(1, -10, 0, 50)
+        button.Position = position
+        button.Text = name
+        button.BackgroundColor3 = Color3.fromRGB(120, 120, 120)
+        button.MouseButton1Click:Connect(function()
+            loadstring(game:HttpGet(code))()
+        end)
+        button.Parent = scrollingFrame
+    end
+
+    -- Lista de botões e códigos
+    local buttons = {
+        {"Shinjuku Yuji movest", "https://raw.githubusercontent.com/Kenjihin69/Kenjihin69/refs/heads/main/Yuji%20early%20access"},
+        {"TOJI MOVESET", "https://raw.githubusercontent.com/Wi-sp/Limitless-legacy/refs/heads/main/GUI"},
+        {"VHS SANS", "https://paste.ee/r/rF9d3"},
+        {"GETO moveset", "https://paste.ee/r/70OTE"},
+        {"A-TRAIN moveset", "https://paste.ee/r/AnZ5j"},
+        {"JJS GOJO moveset", "https://gist.githubusercontent.com/JcBoomin/a63e9ac3e90cef03ecf37e997fd21632/raw/98b567b81f61bb30042e0078b78f3fb24685fb8d/Gojo"},
+        {"MASTERY DEKU moveset", "https://pastebin.com/raw/xKextYP5"},
+        {"Void kills", "https://raw.githubusercontent.com/louismich4el/ItsLouisPlayz-Scripts/main/VOID%20V2%20TSB.lua"},
+        {"GT-CHARA moveset", "https://paste.ee/r/0yYkO"},
+        {"DIDDY moveset", "https://paste.ee/r/gKC8V"},
+        {"HAKARI moveset", "https://pastebin.com/raw/eEDYWj8p"},
+        {"BOROS moveset", "https://paste.ee/r/XPIH5"},
+        {"STAR GLITCHER moveset", "https://paste.ee/r/mmQkO"},
+        {"OKARUN moveset", "https://paste.ee/r/Pn4oj"},
+        {"MINOS PRIME moveset", "https://raw.githubusercontent.com/S1gmaGuy/MinosPrimeFixed/refs/heads/main/ThefixIsSoSigma"},
+        {"TITAN moveset", "https://paste.ee/r/fxY03"},
+        {"SUKUNA moveset", "https://pastebin.com/raw/rL3hyRQV"},
+        {"HUMBLEDS GF moveset", "https://paste.ee/r/7FuWC"},
+        {"KIZARU moveset", "https://paste.ee/r/NPnfk"},
+        {"AKAZA moveset", "https://paste.ee/r/zzvAH"}
+    }
+
+    -- Criação dos botões
+    for i, button in ipairs(buttons) do
+        createButton(button[1], UDim2.new(0, 5, 0, 55 * (i - 1)), button[2])
+    end
+end
+
+-- Criação do botão de alternância
+local toggleButton = Instance.new("TextButton")
+toggleButton.Name = "ToggleButton"
+toggleButton.Size = UDim2.new(0, 100, 0, 50)
+toggleButton.Position = UDim2.new(0.5, -50, 0, 0)
+toggleButton.Text = "Toggle GUI"
+toggleButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+toggleButton.Active = true
+toggleButton.Draggable = true
+toggleButton.Parent = screenGui
+
+-- Variável para controlar o estado da GUI
+local guiVisible = true
+
+-- Função para alternar a GUI
+toggleButton.MouseButton1Click:Connect(function()
+    if guiVisible then
+        if screenGui:FindFirstChild("MainFrame") then
+            screenGui.MainFrame:Destroy()
+        end
+    else
+        createMainGui()
+    end
+    guiVisible = not guiVisible
+end)
+
+-- Inicialmente cria a GUI principal
+createMainGui()
